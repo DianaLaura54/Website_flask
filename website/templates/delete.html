@@ -1,0 +1,39 @@
+<!-- templates/auth/book_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Book List</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Location</th>
+        <th>Status</th>
+        <th>Genre</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in books %}
+        <tr>
+          <td>{{ book.id }}</td>
+          <td>{{ book.name }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.location }}</td>
+          <td>{{ book.status }}</td>
+          <td>{{ book.genre }}</td>
+          <td>
+            <form method="POST" style="display: inline;">
+              <input type="hidden" name="delete" value="{{ book.id }}">
+              <button type="submit" class="btn btn-danger btn-sm" style="background-color: #6c14d2;">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <form method="POST" style="max-width: 400px; margin: auto; background-color: #555; padding: 20px; border-radius: 8px;">
+    <h3 align="center" style="color: #000000;">Login</h3>
+    <div class="form-group">
+      <label for="email" style="color: #000000;">Email Address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        placeholder="Enter email"
+        style="width: 100%; padding: 8px; margin-bottom: 10px;background-color: #f3baec; color: purple;::placeholder{color: purple;}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="password" style="color: #000000;">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+        placeholder="Enter password"
+        style="width: 100%; padding: 8px; margin-bottom: 10px;background-color: #f3baec; color: purple;::placeholder{color: purple;}"
+      />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; background-color: #190eb2; color: #fff; border: none; border-radius: 4px;">Login</button>
+  </form>
+{% endblock %}

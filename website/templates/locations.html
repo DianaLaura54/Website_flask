@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Add and Show Locations{% endblock %}
+
+{% block content %}
+  {% if locations %}
+    <h3>Existing Locations:</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for location in locations %}
+          <tr>
+            <td>{{ location.id }}</td>
+            <td>{{ location.name }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No locations available.</p>
+  {% endif %}
+
+  <form method="POST" style="max-width: 700px; margin: auto; margin-left: 0; background-color: #a62fdd; padding: 20px; border-radius: 8px; margin-top: 20px;">
+    <h3 style="color: #000000;">Add a location</h3>
+    <div class="form-group">
+      <label for="location" style="color: #000000;">Location name</label>
+      <input
+        type="location"
+        class="form-control"
+        id="location"
+        name="location"
+        placeholder="Enter location"
+        style="width: 100%; padding: 8px; margin-bottom: 10px;background-color: #f3baec; color: purple;::placeholder{color: purple;}""
+      />
+    </div>
+    
+    <br />
+    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; background-color: #8723e5; color: #fff; border: none; border-radius: 4px;">Submit</button>
+  </form>
+{% endblock %}

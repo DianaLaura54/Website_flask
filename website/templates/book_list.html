@@ -1,0 +1,49 @@
+<!-- templates/auth/book_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Book List</h1>
+
+  <!-- Genre Filter Form -->
+  <form method="GET" action="{{ url_for('auth.book_list') }}" class="form-inline mb-3">
+    <div class="form-group mr-2">
+      <label for="genre">Filter by genre:</label>
+      <input type="text" class="form-control" id="genre" name="genre" placeholder="Enter genre" style="background-color: #ec83df; color: purple;::placeholder{color: purple;}">
+    </div>
+    <button type="submit" class="btn btn-success btn-sm" style="background-color: #8007d7;">Apply Filter</button>
+  </form>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Location</th>
+        <th>Status</th>
+        <th>Genre</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in books %}
+        {% if genre is none or genre.lower() in book.genre.lower() %}
+          <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.name }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.location }}</td>
+            <td>{{ book.status }}</td>
+            <td>{{ book.genre }}</td>
+            <td>
+              <form method="POST" style="display: inline;">
+                <input type="hidden" name="reserve" value="{{ book.id }}">
+                <button type="submit" class="btn btn-success btn-sm" style="background-color: #8007d7;">Reserve</button>
+              </form>
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

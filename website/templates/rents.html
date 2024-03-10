@@ -1,0 +1,51 @@
+<!-- templates/rents.html -->
+{% extends "base.html" %}
+
+{% block title %}
+  User Rents
+{% endblock %}
+
+{% block content %}
+  <h1>User Rents</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Rent ID</th>
+        <th>Book Name</th>
+        <th>Author</th>
+        <th>Location</th>
+        <th>Rent Date</th>
+        <th>Return Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in range(user_rents|length) %}
+        <tr>
+          <td>{{ user_rents[i].id }}</td>
+          <td>{{ books[i].name }}</td>
+          <td>{{ books[i].author }}</td>
+          <td>{{ books[i].location }}</td>
+          <td>{{ user_rents[i].date }}</td>
+          <td>{{ user_rents[i].return_date }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <form method="POST" style="max-width: 700px; margin: auto; margin-left: 0; background-color: #a62fdd; padding: 20px; border-radius: 8px;">
+    <h3 style="color: #333;">Return a book</h3>
+    <div class="form-group">
+      <label for="rent" style="color: #48d8f2;">Rent</label>
+      <input
+        type="rent"
+        class="form-control"
+        id="rent"
+        name="rent"
+        placeholder="Return the book(write the id)"
+        style="width: 100%; padding: 8px; margin-bottom: 10px; background-color: #f3baec; color: purple;::placeholder{color: purple;}"
+      />
+    </div>
+    
+    <br />
+    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; background-color: #8723e5; color: #fff; border: none; border-radius: 4px;">Submit</button>
+  </form>
+{% endblock %}

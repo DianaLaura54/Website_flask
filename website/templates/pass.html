@@ -1,0 +1,15 @@
+<!-- pass.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Create Pass</h1>
+  <p>Welcome, {{ user.first_name }}! Create your library pass to access additional features.</p>
+
+  <form method="post">
+    <input type="submit" value="Create Pass" style="background-color: #ec83df;">
+  </form>
+
+  {% if user.membership_id %}
+    <p>Your Membership ID: {{ user.membership_id }}</p>
+  {% endif %}
+{% endblock %}

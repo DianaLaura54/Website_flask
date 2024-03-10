@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Add books{% endblock %}
+
+{% block content %}
+
+  <form method="POST" style="max-width: 700px; margin: auto; margin-left: 0; background-color: #7d15a9; padding: 20px; border-radius: 8px;">
+    <h3 style="color: #000000;">Add books</h3>
+    <div class="form-group">
+      <label for="name" style="color: #000000;">Book name</label>
+      <input
+        type="name"
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="Enter book name"
+        style="width: 100%; padding: 8px; margin-bottom: 10px;background-color: #f3baec; color: purple;::placeholder{color: purple;}""
+      />
+    </div>
+    <div class="form-group">
+      <label for="author" style="color: #000000;">Author name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="author"
+        name="author"
+        placeholder="Enter author name"
+        style="width: 100%; padding: 8px; margin-bottom: 10px;background-color: #f3baec; color: purple;::placeholder{color: purple;}""
+      />
+    </div>
+    <div class="form-group">
+      <label for="location" style="color: #000000;">Location name</label>
+      <input
+        type="location"
+        class="form-control"
+        id="location"
+        name="location"
+        placeholder="Enter location"
+        style="width: 100%; padding: 8px; margin-bottom: 10px;background-color: #f3baec; color: purple;::placeholder{color: purple;}""
+      />
+    </div>
+    <div class="form-group">
+      <label for="genre" style="color: #000000;">Genre</label>
+      <input
+        type="genre"
+        class="form-control"
+        id="genre"
+        name="genre"
+        placeholder="Enter genre"
+        style="width: 100%; padding: 8px; margin-bottom: 10px;background-color: #f3baec; color: purple;::placeholder{color: purple;}""
+      />
+    </div>
+    
+    <br />
+    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; background-color: #4529c0; color: #fff; border: none; border-radius: 4px;">Submit</button>
+  </form>
+{% endblock %}
