@@ -1,2 +1,1 @@
-The website has the options to sign up or log in, as the admin or as a user. The user owns a membership, can make donations, search or rent books. The admin can add and delete books, add locations where the book is physically present, and have a list of 
-users. The website was made in Python with the Flask framework and the sqlAlchemy database.
+The website has the options to sign up or log in, as the admin or as a user. You can choose if you want the basic version or the automated one (with Selenium).The user owns a membership, can make donations, search or rent books. The admin can add and delete books, add locations where the book is physically present, and have a list of users. The website was made in Python with the Flask framework and the sqlAlchemy database.
