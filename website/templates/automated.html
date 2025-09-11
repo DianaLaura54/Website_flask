@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Automated Library{% endblock %}
+
+{% block content %}
+<div class="container"  >
+    <h1> Automated Library Actions</h1>
+    <p>This page uses Selenium to automatically interact with your existing library system.</p>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header" style="background-color: #e361cd";>
+                    <h5>Automatic Book Discovery </h5>
+                     
+                </div>
+                <div class="card-body"  style="background-color: #a564e1;" >
+                    <p>Let Selenium automatically browse your book collection:</p>
+                    <form method="POST">
+                        <input type="hidden" name="action" value="auto_browse_books">
+                        <button type="submit" class="btn btn-primary" style="background-color: #e361cd" >Auto Browse Books</button>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header" style="background-color: #e361cd";>
+                    <h5>Automatic Search</h5>
+                </div>
+                <div class="card-body"  style="background-color: #a564e1;" >
+                    <p>Search for books automatically:</p>
+                    <form method="POST">
+                        <input type="hidden" name="action" value="auto_search">
+                        <div class="form-group">
+                            <input type="text" name="search_term" class="form-control" placeholder="Search term" value="fiction">
+                        </div>
+                        <button type="submit" class="btn btn-success" style="background-color: #e361cd">Auto Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header" style="background-color: #e361cd";>
+                    <h5>Auto Reserve Book</h5>
+                </div>
+                <div class="card-body"  style="background-color: #a564e1;" >
+                    <p>Automatically reserve the first available book:</p>
+                    <form method="POST">
+                        <input type="hidden" name="action" value="auto_reserve">
+                        <button type="submit" class="btn btn-success" style="background-color: #e361cd" >Auto Reserve</button>
+                    </form>
+                   
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header" style="background-color: #e361cd";>
+                    <h5>Auto Donate Book</h5>
+                </div>
+                <div class="card-body"  style="background-color: #a564e1;" >
+                    <p>Automatically donate a random book to the library:</p>
+                    <form method="POST">
+                        <input type="hidden" name="action" value="auto_donate">
+                        <button type="submit" class="btn btn-success" style="background-color: #e361cd" >Auto Donate</button>
+                    </form>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+        
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header" style="background-color: #e361cd";>
+                    <h5>Regular Library</h5>
+                </div>
+                <div class="card-body" style="background-color: #a564e1;" >
+                    <p>Go back to your normal library interface:</p>
+                    <a href="/book_list" class="btn btn-secondary" style="background-color: #e361cd";>Manual Book List</a>
+                    <a href="/" class="btn btn-secondary" style="background-color: #e361cd";>Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% if books_found %}
+<div class="row">
+    <div class="col-12">
+      
+        <div class="card" style="background-color: #78e1fe;">
+            <div class="card-header" style="background-color: #b63ab1; color: #fff;">
+                <h5>Books Found by Selenium</h5>
+            </div>
+            <div class="card-body">
+                {% for book in books_found %}
+                    {% if book.error %}
+                       
+                        <div class="alert alert-danger" style="background-color: #e458db; color: #fff; border-color: #9b00b1;">
+                            <strong>Error:</strong> {{ book.error }}
+                        </div>
+                    {% else %}
+                      
+                        <div class="alert alert-success" style="background-color: #9f47df; color: #fff; border-color: #7b1ab6;">
+                            <strong>{{ book.name }}</strong> by {{ book.author }} - <span style="font-weight: bold;">Status:</span> {{ book.status }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+{% endblock %}

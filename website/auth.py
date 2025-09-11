@@ -102,7 +102,7 @@ def book_list():
         else:
             flash('Invalid book selection', category='error')
 
-    # Filter books by genre if provided
+    # filter books by genre if provided
     if genre:
         books = Book.query.filter(Book.genre.ilike(f'%{genre}%')).all()
     else:
@@ -223,12 +223,12 @@ def user_rents():
             rent_to_delete = db.session.execute(rent_query).fetchone()
 
             if rent_to_delete:
-                # Delete the rent with the specified ID
+                # delete the rent with the specified ID
                 delete_query = text(f"DELETE FROM Rents WHERE id = {rent_id_to_delete} AND id_user = {current_user.id}")
                 db.session.execute(delete_query)
                 db.session.commit()
 
-                # Update the book status to 'Available'
+                # update the book status to 'Available'
                 update_book_query = text(f"UPDATE Book SET status = 'Available' WHERE id = {rent_to_delete.id_book}")
                 db.session.execute(update_book_query)
                 db.session.commit()
@@ -237,11 +237,11 @@ def user_rents():
             else:
                 flash(f'Invalid Rent ID or Rent does not belong to the current user', category='error')
 
-    # Fetch the rents for the current user using a raw SQL query
+    # fetch the rents for the current user using a raw SQL query
     query = text(f"SELECT * FROM Rents WHERE id_user = {current_user.id}")
     user_rents = db.session.execute(query).fetchall()
 
-    # Fetch the book details for each rent
+    # fetch the book details for each rent
     books = []
     for rent in user_rents:
         book_id = rent.id_book

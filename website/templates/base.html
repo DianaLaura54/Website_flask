@@ -19,39 +19,40 @@
   <title>{% block title %}Online Library{% endblock %}</title>
 </head>
 <body style="background-color: #4d77da;">
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #e361cd;">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbar">
-      <div class="navbar-nav">
-         {% if user.is_authenticated %}
-            <a class="nav-item nav-link" id="logout" href="/logout" style="color: rgb(0, 0, 0);">Logout</a>
-            <a class="nav-item nav-link" id="available books" href="/book_list" style="color: rgb(0, 0, 0);">Available books</a>
-            
-            {% if user.first_name != "Admin" %}
-                <a class="nav-item nav-link" id="create a pass" href="/pass" style="color: rgb(0, 0, 0);">Pass</a>
-                <a class="nav-item nav-link" id="donate" href="/donate" style="color: rgb(0, 0, 0);">Donations</a>
-                <a class="nav-item nav-link" id="rents" href="/rents" style="color: rgb(0, 0, 0);">Rents</a>
-            {% endif %}
-
-
-              
-          {% if user.first_name == "Admin" %}
-               <a class="nav-item nav-link" id="home" href="/">Reminders</a>
-              <a class="nav-item nav-link" id="add" href="/add" style="color: rgb(0, 0, 0);">Add books</a>
-              <a class="nav-item nav-link" id="locations" href="/locations" style="color: rgb(0, 0, 0);">Add location</a>
-              <a class="nav-item nav-link" id="delete" href="/delete" style="color: rgb(0, 0, 0);">Delete books</a>
-              <a class="nav-item nav-link" id="users" href="/users" style="color: rgb(0, 0, 0);">See users</a>
-          {% endif %}
-              
-          {% else %}
-              <a class="nav-item nav-link" id="login" href="/login" style="color: rgb(0, 0, 0);">Login</a>
-              <a class="nav-item nav-link" id="signUp" href="/sign-up" style="color: rgb(0, 0, 0);">Sign Up</a>
-          {% endif %}
-      </div>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #e361cd;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbar">
+    <div class="navbar-nav">
+      {% if user.is_authenticated %}
+        <a class="nav-item nav-link" id="logout" href="/logout" style="color: rgb(0, 0, 0);">Logout</a>
+        <a class="nav-item nav-link" id="available books" href="/book_list" style="color: rgb(0, 0, 0);">Available books</a>
+        
+        {% if user.first_name != "Admin" %}
+          <a class="nav-item nav-link" id="create a pass" href="/pass" style="color: rgb(0, 0, 0);">Pass</a>
+          <a class="nav-item nav-link" id="donate" href="/donate" style="color: rgb(0, 0, 0);">Donations</a>
+          <a class="nav-item nav-link" id="rents" href="/rents" style="color: rgb(0, 0, 0);">Rents</a>
+        {% endif %}
+        
+        {% if user.first_name == "Admin" %}
+          <a class="nav-item nav-link" id="home" href="/">Reminders</a>
+          <a class="nav-item nav-link" id="add" href="/add" style="color: rgb(0, 0, 0);">Add books</a>
+          <a class="nav-item nav-link" id="locations" href="/locations" style="color: rgb(0, 0, 0);">Add location</a>
+          <a class="nav-item nav-link" id="delete" href="/delete" style="color: rgb(0, 0, 0);">Delete books</a>
+          <a class="nav-item nav-link" id="users" href="/users" style="color: rgb(0, 0, 0);">See users</a>
+        {% endif %}
+        
+     
+        <a href="/automated" class="nav-item nav-link" style="color: rgb(0, 0, 0);">Automated Library</a>
+      {% else %}
+        <a class="nav-item nav-link" id="login" href="/login" style="color: rgb(0, 0, 0);">Login</a>
+        <a class="nav-item nav-link" id="signUp" href="/sign-up" style="color: rgb(0, 0, 0);">Sign Up</a>
+      {% endif %}
+    </div>
   </div>
-  </nav>
+</nav>
+
   <div class="text-center py-3" style="background-color: #5d11a3;">
     <h2 style="color: rgb(0, 0, 0);">Online Library</h2>
   </div>
