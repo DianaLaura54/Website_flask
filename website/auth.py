@@ -14,7 +14,6 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
@@ -25,7 +24,6 @@ def login():
                 flash('Incorrect password, try again.', category='error')
         else:
             flash('Email does not exist.', category='error')
-
     return render_template("login.html", user=current_user)
 
 
@@ -50,27 +48,20 @@ def pass_page():
         current_user.id_pass =id_pass
         current_user.member=True
         db.session.commit()
-        
         initial_price = 20
         student_discount = 0.5 if current_user.student.lower() == 'yes' else 1.0
         age_discount = 0.5 if current_user.age < 7 else 1.0
         price = int(initial_price * student_discount * age_discount)
         date_today = datetime.utcnow().date()
-        
-
         pass_data = Pass(
             id_pass=id_pass,
             price=price,
             status='Active',
-            
             date=date_today
         )
-
         db.session.add(pass_data)
         db.session.commit()
-        
         flash(f'Pass created! Your Membership ID is {pass_data.id_pass}. Price: {price} credits', category='success')
-
     return render_template("pass.html", user=current_user)
 
 
@@ -80,15 +71,11 @@ def pass_page():
 @login_required
 def book_list():
     genre = request.args.get('genre')
-
     if request.method == 'POST':
         book_id = request.form.get('reserve')
-
         book = Book.query.get(book_id)
-
         if book:
             user_pass = Pass.query.filter_by(id_pass=current_user.id_pass).first()
-
             if user_pass and book.status == 'Available':
                 book.status = 'Reserved'
                 rent = Rents(id_book=book_id, id_user=current_user.id, date=datetime.now(), return_date=datetime.now() + timedelta(days=14))
@@ -101,13 +88,11 @@ def book_list():
                 flash(f'Book "{book.name}" is not available for reservation', category='error')
         else:
             flash('Invalid book selection', category='error')
-
     # filter books by genre if provided
     if genre:
         books = Book.query.filter(Book.genre.ilike(f'%{genre}%')).all()
     else:
         books = Book.query.all()
-
     return render_template("book_list.html", user=current_user, books=books, genre=genre)
 
 #this method is for sign up,the user has to specify the email,name,password(once and twice for confirmation),their age and if they are a student or not
@@ -137,16 +122,12 @@ def sign_up():
             flash("The age isn't valid")
         elif student.lower() not in ["yes", "no"]:
             flash("Please insert yes or no")
-
-
         else:
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='pbkdf2:sha256'),age=age,student=student,id_pass=id_pass,member=member,donations=0)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
             flash('Account created!', category='success')
-            
-
     return render_template("sign_up.html", user=current_user)
 
 #this method is for the admin to add books to the database
@@ -158,7 +139,6 @@ def add():
         location = request.form.get('location') 
         status="Available"
         genre= request.form.get('genre')
-        
         if len(name) < 1:
             flash('Please provide a name for the book', category='error')
         elif len(author) < 1:
@@ -174,10 +154,8 @@ def add():
                 db.session.add(new_book)
                 db.session.commit()
                 flash('Book added!', category='success')
-            
             else:
                 flash('Location does not exist. Please choose a valid location.', category='error')
-
     return render_template("add.html", user=current_user)
 
 
@@ -191,12 +169,10 @@ def add():
 def locations():
     if request.method == 'POST':
         name = request.form.get('location')
-        
         if len(name) < 1:
             flash('Please give a name', category='error')
         else:
             existing_location = Location.query.filter_by(name=name).first()
-
             if existing_location:
                 flash('Location already exists', category='error')
             else:
@@ -204,8 +180,6 @@ def locations():
                 db.session.add(new_location)
                 db.session.commit()
                 flash('Location added!', category='success')
-                
-
     locations = Location.query.all()
     return render_template("locations.html", user=current_user, locations=locations)
 
@@ -218,29 +192,23 @@ def user_rents():
     if request.method == 'POST':
         rent_id_to_delete = request.form.get('rent')
         if rent_id_to_delete:
-            
             rent_query = text(f"SELECT * FROM Rents WHERE id = {rent_id_to_delete} AND id_user = {current_user.id}")
             rent_to_delete = db.session.execute(rent_query).fetchone()
-
             if rent_to_delete:
                 # delete the rent with the specified ID
                 delete_query = text(f"DELETE FROM Rents WHERE id = {rent_id_to_delete} AND id_user = {current_user.id}")
                 db.session.execute(delete_query)
                 db.session.commit()
-
                 # update the book status to 'Available'
                 update_book_query = text(f"UPDATE Book SET status = 'Available' WHERE id = {rent_to_delete.id_book}")
                 db.session.execute(update_book_query)
                 db.session.commit()
-
                 flash(f'Rent with ID {rent_id_to_delete} deleted successfully, and book status updated', category='success')
             else:
                 flash(f'Invalid Rent ID or Rent does not belong to the current user', category='error')
-
     # fetch the rents for the current user using a raw SQL query
     query = text(f"SELECT * FROM Rents WHERE id_user = {current_user.id}")
     user_rents = db.session.execute(query).fetchall()
-
     # fetch the book details for each rent
     books = []
     for rent in user_rents:
@@ -248,7 +216,6 @@ def user_rents():
         book_query = text(f"SELECT * FROM Book WHERE id = {book_id}")
         book = db.session.execute(book_query).fetchone()
         books.append(book)
-
     return render_template("rents.html", user=current_user, user_rents=user_rents, books=books)
 
 
@@ -258,10 +225,8 @@ def user_rents():
 def delete_book():
     if request.method == 'POST':
         book_id = request.form.get('delete')
-
         if book_id is not None and book_id.isdigit():
             book = Book.query.get(book_id)
-
             if book and book.status == 'Available':
                 db.session.delete(book)
                 db.session.commit()
@@ -272,7 +237,6 @@ def delete_book():
                 flash(f'Book with ID {book_id} not found', category='error')
         else:
             flash('Invalid book ID', category='error')
-
     books = Book.query.all()
     return render_template("delete.html", books=books, user=current_user)
 
@@ -288,7 +252,6 @@ def donate():
         location = request.form.get('location') 
         status = "Available"
         genre= request.form.get('genre')
-        
         if len(name) < 1:
             flash('Please provide a name for the book', category='error')
         elif len(author) < 1:
@@ -303,16 +266,13 @@ def donate():
                 new_book = Book(name=name, author=author, location=location, status=status,genre=genre)
                 db.session.add(new_book)
                 db.session.commit()
-
                 # Increase the current user's donations
                 current_user.donations=current_user.donations+1
                 db.session.commit()
-
                 flash('Book added! Thank you for your donation.', category='success')
                 return redirect(url_for('views.home'))
             else:
                 flash('Location does not exist. Please choose a valid location.', category='error')
-
     return render_template("donate.html", user=current_user)
 
 # route for admin to view users
